@@ -1,3 +1,5 @@
+console.log("Omnitone :", Omnitone);
+
 // Création du contexte audio
 let audioContext = new (window.AudioContext || window.webkitAudioContext)();
 let ambisonicDecoder;
