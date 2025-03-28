@@ -6,7 +6,7 @@ let audioElement;
 async function initAudio() {
     // Création et configuration de l'élément audio
     audioElement = document.createElement('audio');
-    audioElement.src = 'https://static.wixstatic.com/mp3/a06a49_146db5a3d4bf4d70acb3cefd25ba8551.wav'; // Remplace par ton fichier audio ambisonique
+    audioElement.src = 'Test exp ambiv1.wav'; // Remplace par ton fichier audio ambisonique
     audioElement.loop = true;
     audioElement.crossOrigin = 'anonymous';
 
