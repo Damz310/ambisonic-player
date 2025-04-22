@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Lecteur Ambisonic avec Head Tracking</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://googlechrome.github.io/omnitone/build/omnitone.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>🎧 Ambisonic Audio Player</h1>
+  <p>Déplace ton téléphone pour ressentir l'audio spatial en temps réel.</p>
+
+  <audio id="ambisonic" src="test-audio.wav" crossorigin="anonymous" controls></audio>
+
+  <script>
+    const audioContext = new AudioContext();
+    const audioElement = document.getElementById('ambisonic');
+    const source = audioContext.createMediaElementSource(audioElement);
+
+    Omnitone.createFOADecoder(audioContext, {
+      channelMap: [0, 1, 2, 3]
+    }).then(decoder => {
+      decoder.initialize().then(() => {
+        source.connect(decoder.input);
+        decoder.output.connect(audioContext.destination);
+
+        // Activation du head tracking
+        window.addEventListener("deviceorientation", (event) => {
+          const yaw = event.alpha * (Math.PI / 180);   // Z
+          const pitch = event.beta * (Math.PI / 180);  // X
+          const roll = event.gamma * (Math.PI / 180);  // Y
+          decoder.setRotationMatrixFromYawPitchRoll(yaw, pitch, roll);
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
